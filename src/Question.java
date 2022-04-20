@@ -27,20 +27,20 @@ public class Question {
     private void displayOptions()
     {
         int counter = 1;
-        for(int i=0; i < this.options.stream().count() ; i++ )
+        for(int i=0; i < this.options.stream().count()  ; i++ )
         {
           if(this.options.get(i).length() > 1){
-            System.out.println( counter + this.options.get(i));
+            System.out.println( counter +" "+ this.options.get(i));
             counter++;
           }
 
         }
     }
 
-    public void getAnswer(String question)
+    public String getAnswer(int index)
     {
-        System.out.println("");
-        System.out.println(question);
+
+        return this.options.get( index - 1).toString();
     }
 
     public String getAnswer()
@@ -48,11 +48,8 @@ public class Question {
         return this.answer;
     }
 
-    public boolean isAnswerCorrect(String[] userAnswer)
+    public boolean isAnswerCorrect(String userAnswer)
     {
-       // String[] tempArr;
-        //tempArr = this.answer.split(";");
-       // if ()
-        return  this.answer == userAnswer;
+        return  this.answer.equals(userAnswer);
     }
 }
