@@ -50,9 +50,9 @@ public class Question {
 
     public boolean isAnswerCorrect(String[] userAnswer)
     {
-        String[] tempArr;
-        tempArr = this.answer.split(";");
+       // String[] tempArr;
+        //tempArr = this.answer.split(";");
        // if ()
-        return  true;
+        return  this.answer == userAnswer;
     }
 }
