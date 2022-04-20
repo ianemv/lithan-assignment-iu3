@@ -84,7 +84,6 @@ public class MainApp {
         for (File file: listOfFiles){
             if (file.isFile()){
                 System.out.println(file.getName()+"     |");
-                System.out.println(file.getAbsoluteFile()+ "     |");
             }
         }
         System.out.println("                            |");
