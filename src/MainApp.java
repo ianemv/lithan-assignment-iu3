@@ -44,6 +44,9 @@ public class MainApp {
             System.out.print("Enter your answer: ");
             selected = sc.nextLine();
             System.out.println("Your selected answer: "+selected);
+            if(questionItem.isAnswerCorrect(selected)){
+                accumulatedScore += 1;
+            }
 
         }
         br.close();
