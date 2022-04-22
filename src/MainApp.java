@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,7 +23,8 @@ public class MainApp {
 
 
         // File file = new File(listOfFiles[userChoice-1].getAbsoluteFile());
-        File file = new File("C:\\Users\\DevUser\\Documents\\Masteral\\Assignments\\IU3\\src\\questionnaires\\MCQ_Set_1.csv");
+
+        File file = new File(".\\questionnaires\\MCQ_Set_1.csv");
         //File file = new File("C:\Users\\DevUser\\Documents\\Masteral\\Assignments\\IU3\\src\\questionnaires\\MCQ_Set_1.csv");
         //File file = new File("src\questionnaires\MCQ_Set_1.csv");
         //System.out.println(listOfFiles[userChoice-1].getAbsoluteFile());
@@ -57,7 +59,6 @@ public class MainApp {
             if(questionItem.isAnswerCorrect(selectedAnswer)){
                 accumulatedScore += 1;
                 System.out.println("You are correct!");
-
             }else{
                 System.out.println("Incorrect answer");
             }
@@ -70,29 +71,15 @@ public class MainApp {
 
     }
 
-    public static int getUserChoiceMCQSet()
+    public static int getUserChoiceMCQSet() throws IOException
     {
-        Scanner sc = new Scanner(System.in);
-
-        File folder = new File("C:\\Users\\DevUser\\Documents\\Masteral\\Assignments\\IU3\\src\\questionnaires");
-        File[] listOfFiles = folder.listFiles();
-        System.out.println("---------------------------");
-        System.out.println("                            |");
-        System.out.println("                            |");
-        System.out.println("                            |");
-        System.out.println("Select from MCQ Set below   |");
-        for (File file: listOfFiles){
-            if (file.isFile()){
-                System.out.println(file.getName()+"     |");
-            }
+        try{
+            ListFiles listFile = new ListFiles("questionnaires", ".csv");
+            listFile.displayFiles();
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        System.out.println("                            |");
-        System.out.println("                            |");
-        System.out.println("                            |");
-        System.out.println("----------------------------|");
-        System.out.print("Enter your choice: ");
-        int selected = sc.nextInt();
-        //sc.close();
-        return selected;
+
+        return 0;
     }
 }
