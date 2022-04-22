@@ -16,7 +16,7 @@ public class ListFiles {
     ListFiles(String directoryPath, String ext) throws IOException{
         Path folderPath = Paths.get(directoryPath);
 
-        try (Stream<Path> stream = Files.walk(folderPath, Integer.MAX_VALUE)) {
+        try (Stream<Path> stream = Files.walk(folderPath, 0)) {
             this.files = stream
                             .map(String::valueOf)
                             .filter(file -> file.contains(ext))
