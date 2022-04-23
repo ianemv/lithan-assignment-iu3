@@ -14,72 +14,25 @@ public class MainApp {
 
 
     public static final String delimiter = ",";
+    public ListFiles listFile;
 
     public static void main(String[] args)  throws Exception
     {
 
-        int userChoice = getUserChoiceMCQSet();
-        double accumulatedScore = 0;
+        User activeUser = new User();
+        activeUser.greetUser();
 
+        ListFiles fileLister = new ListFiles("./src/questionnaires", ".csv");
+        fileLister.getUserFileChoice();
 
-        // File file = new File(listOfFiles[userChoice-1].getAbsoluteFile());
+        File file = new File(fileLister.getSelectedFile());
+        MCQSet selectedMCQ = new MCQSet(file, delimiter);
+        selectedMCQ.startQuiz();
 
-        File file = new File(".\\questionnaires\\MCQ_Set_1.csv");
-        //File file = new File("C:\Users\\DevUser\\Documents\\Masteral\\Assignments\\IU3\\src\\questionnaires\\MCQ_Set_1.csv");
-        //File file = new File("src\questionnaires\MCQ_Set_1.csv");
-        //System.out.println(listOfFiles[userChoice-1].getAbsoluteFile());
+        activeUser.setScore(selectedMCQ.getAccumulatedScore());
+        activeUser.congratulate();
 
-        FileReader fr = new FileReader(file);
-        BufferedReader br = new BufferedReader(fr);
-        String line = "";
-        String[] questions;
-
-        // use to get user answer
-        Scanner sc = new Scanner(System.in);
-        while ((line = br.readLine()) != null) {
-            questions = line.split(delimiter);
-
-            System.out.println(questions);
-            String[] options = {};
-            List<String> list = new ArrayList<>();
-            for(int i=2; i <= 5; i++ ){
-                list.add(questions[i]);
-            }
-
-            Question questionItem = new Question(questions[1], list , questions[6] );
-            questionItem.display();
-
-            System.out.println("Enter your answer: ");
-
-            int userInput = sc.nextInt();
-
-            System.out.println("Your selected answer: "+userInput);
-            String selectedAnswer = questionItem.getAnswer(userInput);
-
-            if(questionItem.isAnswerCorrect(selectedAnswer)){
-                accumulatedScore += 1;
-                System.out.println("You are correct!");
-            }else{
-                System.out.println("Incorrect answer");
-            }
-
-        }
-        System.out.println("Total Score "+ accumulatedScore);
-        sc.close();
-
-        br.close();
-
+        selectedMCQ.showResult();
     }
 
-    public static int getUserChoiceMCQSet() throws IOException
-    {
-        try{
-            ListFiles listFile = new ListFiles("questionnaires", ".csv");
-            listFile.displayFiles();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        return 0;
-    }
 }

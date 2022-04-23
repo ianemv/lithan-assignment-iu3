@@ -1,67 +1,68 @@
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
+
+/**
+ * @author Ian Villanueva
+ * @version 0.0.1
+ * ListFiles class for accessing the system assigned directory.
+ * Shall display all the files under the directory and let user select what file to be used for the quiz.
+ *
+ */
 public class ListFiles {
     private List<String> files;
     //private File fileSelected;
     private String fileSelected;
+    private File[] folderFiles;
+    private String ext;
+    private String directoryPath;
 
     ListFiles(String directoryPath, String ext) throws IOException{
-        Path folderPath = Paths.get(directoryPath);
 
-        try (Stream<Path> stream = Files.walk(folderPath, 0)) {
-            this.files = stream
-                            .map(String::valueOf)
-                            .filter(file -> file.contains(ext))
-                            .sorted()
-                            .collect(Collectors.toList());
-        }
-
-        //File folder = new File(directoryPath);
-        System.out.println(folderPath);
-        System.out.println(this.files);
-        //File[] listOfFiles = folder.listFiles();
-        //this.files = listOfFiles;
-       // System.out.println(listOfFiles);
-        System.out.println(directoryPath);
+        File folder = new File(directoryPath);
+        this.folderFiles = folder.listFiles();
+        this.directoryPath = directoryPath;
+        this.ext = ext;
     }
 
-    public void displayFiles() throws IOException
+    public void getUserFileChoice() throws IOException{
+        displayFiles();
+        selectFile();
+    }
+    private void displayFiles() throws IOException
     {
         System.out.println("---------------------------");
         System.out.println("                            |");
         System.out.println("                            |");
         System.out.println("                            |");
         System.out.println("Select from MCQ Set below   |");
-        for (String file: this.files){
-            System.out.println(file);
+        String filename = "";
+        for (int i=0; i < this.folderFiles.length; i++){
+            filename = this.folderFiles[i].getName();
+            System.out.println("1) "+filename.substring(0, filename.length() - 4 ));
         }
+
         System.out.println("                            |");
         System.out.println("                            |");
         System.out.println("                            |");
         System.out.println("----------------------------|");
     }
 
-    public void selectFile()
+    private void selectFile()
     {
         try {
             Scanner sc = new Scanner(System.in);
             System.out.print("Enter your choice: ");
             int selected = sc.nextInt();
-            this.fileSelected = this.files.get(selected -1);
+            this.fileSelected = this.folderFiles[selected -1].getName();
         }catch(Exception e){
             e.printStackTrace();
         }
     }
 
     public String getSelectedFile(){
-        return this.fileSelected.toString();
+        return this.directoryPath + "/"+ this.fileSelected.toString();
     }
 }
