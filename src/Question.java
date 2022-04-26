@@ -1,13 +1,14 @@
 import java.util.List;
 
-public class Question {
+public class Question implements IQuestion{
 
     String question;
     List<String> options;
     String answer;
 
+    public Question(){}
 
-    Question(String question, List<String> options, String answer){
+    public Question(String question, List<String> options, String answer){
         this.question = question;
         this.options = options;
         this.answer = answer;
@@ -16,15 +17,15 @@ public class Question {
     public void display()
     {
         this.displayQuestion();
-        this.displayOptions();
+        this.showOptions();
     }
 
     private void displayQuestion()
     {
-       System.out.println(this.question);
+       System.out.println("Q: "+this.question);
     }
 
-    private void displayOptions()
+    private void showOptions()
     {
         int counter = 1;
         for(int i=0; i < this.options.stream().count()  ; i++ )
@@ -37,9 +38,21 @@ public class Question {
         }
     }
 
+    public void setOptions(List<String> options){
+        this.options = options;
+    }
+
+    public void setQuestion(String question)
+    {
+        this.question = question;
+    }
+    public void setAnswer(String answer)
+    {
+        this.answer = answer;
+    }
+
     public String getAnswer(int index)
     {
-
         return this.options.get( index - 1).toString();
     }
 

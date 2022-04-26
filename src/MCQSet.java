@@ -8,7 +8,11 @@ import java.util.Scanner;
 
 /**
  * CLass for the MCQ Set.
- *
+ * properties
+ * @selectedFile - the file selected by user
+ * @accumulatedScore - keeps the total correct answers
+ * @total - count the number of questions based on the csv/selectedFile
+ * @delimiter - the separator for each column from the csv file.
  */
 
 public class MCQSet {
@@ -31,26 +35,25 @@ public class MCQSet {
         FileReader fr = new FileReader(this.selectedFile);
         BufferedReader br = new BufferedReader(fr);
         String line = "";
-        String[] questions;
+        String[] rowLine;
 
         // use to get user answer
         Scanner sc = new Scanner(System.in);
-        while ((line = br.readLine()) != null) {
+        while (( line = br.readLine()) != null) {
 
-            questions = line.split(this.delimiter);
+            rowLine = line.split(this.delimiter);
 
             if (line.equals("")) {
                 continue;
             }
 
-            System.out.println(questions);
             String[] options = {};
             List<String> list = new ArrayList<>();
             for(int i=2; i <= 5; i++ ){
-                list.add(questions[i]);
+                list.add(rowLine[i]);
             }
 
-            Question questionItem = new Question(questions[1], list , questions[6] );
+            Question questionItem = new Question( rowLine[1], list , rowLine[6] );
             printLineDiv();
             questionItem.display();
             printLineDiv();
@@ -67,6 +70,7 @@ public class MCQSet {
                 System.out.println("You are correct!");
             }else{
                 System.out.println("Incorrect answer");
+                System.out.println("The correct answer is: " + questionItem.getAnswer() );
             }
             this.total += 1;
         }
@@ -76,7 +80,6 @@ public class MCQSet {
     private void printLineDiv()
     {
         System.out.println("======================================");
-        System.out.println("");
         System.out.println("");
         System.out.println("");
     }
@@ -90,14 +93,21 @@ public class MCQSet {
     public void showResult()
     {
         System.out.println("======================================");
-        System.out.println("Your total score is: " + this.accumulatedScore);
+        System.out.println("Your total correct answer: " + this.accumulatedScore + "/" + this.total);
         System.out.println("Your wrong answer is: " + (this.total - this.accumulatedScore));
-        System.out.println("Your rate is: " + this.calculateRate());
+        System.out.println("Your rate is: " + this.calculateRate() + "%");
+        System.out.println("======================================");
 
     }
 
     public double getAccumulatedScore()
     {
         return this.accumulatedScore;
+    }
+
+
+    @Override
+    public java.lang.String toString() {
+        return super.toString();
     }
 }

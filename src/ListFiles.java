@@ -28,23 +28,22 @@ public class ListFiles {
     }
 
     public void getUserFileChoice() throws IOException{
-        displayFiles();
+        displayMenu();
         selectFile();
     }
-    private void displayFiles() throws IOException
+    private void displayMenu() throws IOException
     {
         System.out.println("---------------------------");
         System.out.println("                            |");
         System.out.println("                            |");
         System.out.println("                            |");
-        System.out.println("Select from MCQ Set below   |");
+        System.out.println("Choose your multiple choice question below.   |");
+        System.out.println("Type the number of your choice.   |");
         String filename = "";
         for (int i=0; i < this.folderFiles.length; i++){
             filename = this.folderFiles[i].getName();
-            System.out.println("1) "+filename.substring(0, filename.length() - 4 ));
+            System.out.println( (i+1) + ") "+filename.substring(0, filename.length() - 4 ));
         }
-
-        System.out.println("                            |");
         System.out.println("                            |");
         System.out.println("                            |");
         System.out.println("----------------------------|");
@@ -56,6 +55,7 @@ public class ListFiles {
             Scanner sc = new Scanner(System.in);
             System.out.print("Enter your choice: ");
             int selected = sc.nextInt();
+            //if (selected )
             this.fileSelected = this.folderFiles[selected -1].getName();
         }catch(Exception e){
             e.printStackTrace();
